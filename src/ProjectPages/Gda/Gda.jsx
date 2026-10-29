@@ -26,7 +26,6 @@ import {
 } from "react-icons/fa6";
 
 import Navbar from "../../Components/Header/Navbar";
-import FloatingSocial from "../../Components/FloatingSocial/FloatingSocial";
 import "../Vvip/vvip.css";
 // import "./gda-residential.css";
 
@@ -119,7 +118,6 @@ export default function Gda() {
   return (
     <main className="saya-page gda-page">
       <Navbar />
-      <FloatingSocial />
 
       {/* HERO */}
       <section className="saya-hero">

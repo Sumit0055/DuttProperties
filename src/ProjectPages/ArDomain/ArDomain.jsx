@@ -42,7 +42,6 @@ import {
 
 import Navbar from "../../Components/Header/Navbar";
 import "../Vvip/vvip.css";
-import FloatingSocial from "../../Components/FloatingSocial/FloatingSocial";
 
 /* =========================================
    AR DOMAIN PROJECT DETAILS
@@ -157,7 +156,6 @@ export default function ArDomain() {
   return (
     <main className="saya-page">
       <Navbar />
-      <FloatingSocial />
 
       {/* HERO SECTION */}
       <section className="saya-hero">

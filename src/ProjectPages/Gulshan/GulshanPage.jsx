@@ -25,7 +25,6 @@ import {
 } from "react-icons/fa6";
 
 import Navbar from "../../Components/Header/Navbar";
-import FloatingSocial from "../../Components/FloatingSocial/FloatingSocial";
 import "../Vvip/vvip.css";
 
 const property = {
@@ -93,7 +92,6 @@ export default function GulshanPage() {
   return (
     <main className="saya-page gulshan-page">
       <Navbar />
-      <FloatingSocial />
 
       {/* HERO SECTION */}
       <section className="saya-hero">

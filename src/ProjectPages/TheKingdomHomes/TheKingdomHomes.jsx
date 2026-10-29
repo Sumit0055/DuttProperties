@@ -36,7 +36,6 @@ import {
 import Navbar from "../../Components/Header/Navbar";
 // import "./SayaPage.css";
 import "../Saya/SayaPage.css"; // Reuse SayaPage styles for TheKingdomHomes
-import FloatingSocial from "../../Components/FloatingSocial/FloatingSocial";
 
 const property = {
   name: "THE KINGDOM HOME",
@@ -110,7 +109,6 @@ export default function SayaPage() {
   return (
     <main className="saya-page">
       <Navbar />
-      <FloatingSocial />
 
       {/* Hero Section */}
       <section className="saya-hero">

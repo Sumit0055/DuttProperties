@@ -2,15 +2,7 @@
 
 import React, { useState } from "react";
 import Navbar from "../Components/Header/Navbar";
-import {
-  FaEnvelope,
-  FaFacebookF,
-  FaInstagram,
-  FaLocationDot,
-  FaPhone,
-  FaWhatsapp,
-  FaYoutube,
-} from "react-icons/fa6";
+import { FaEnvelope, FaLocationDot, FaPhone, FaWhatsapp } from "react-icons/fa6";
 import { siteConfig, whatsappLink } from "@/lib/site";
 
 const budgetOptions = [
@@ -49,12 +41,6 @@ const locationOptions = [
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 const PHONE_DIGITS = /\d/g;
-
-const socials = [
-  { label: "Instagram", href: siteConfig.social.instagram, icon: FaInstagram },
-  { label: "Facebook", href: siteConfig.social.facebook, icon: FaFacebookF },
-  { label: "YouTube", href: siteConfig.social.youtube, icon: FaYoutube },
-];
 
 function validate(values) {
   const errors = {};
@@ -462,21 +448,6 @@ export default function Contact() {
                   {siteConfig.address.region} {siteConfig.address.postalCode}
                 </span>
               </span>
-            </div>
-
-            <div className="dp-contact-socials">
-              {socials.map(({ label, href, icon: Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  title={label}
-                >
-                  <Icon aria-hidden="true" />
-                </a>
-              ))}
             </div>
           </aside>
         </div>

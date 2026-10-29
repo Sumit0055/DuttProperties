@@ -22,7 +22,6 @@ import {
 
 import Navbar from "../../Components/Header/Navbar";
 import "./SayaPage.css";
-import FloatingSocial from "../../Components/FloatingSocial/FloatingSocial";
 
 const property = {
   name: "SAYA",
@@ -91,7 +90,6 @@ export default function SayaPage() {
   return (
     <main className="saya-page">
       <Navbar />
-      <FloatingSocial />
       {/* Hero Section */}
       <section className="saya-hero">
         <div className="saya-ambient saya-ambient-one" />

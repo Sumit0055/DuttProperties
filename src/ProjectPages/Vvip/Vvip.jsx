@@ -33,7 +33,6 @@ import {
 
 import Navbar from "../../Components/Header/Navbar";
 import "./vvip.css";
-import FloatingSocial from "../../Components/FloatingSocial/FloatingSocial";
 
 const property = {
   name: "VVIP MADHUBAN",
@@ -102,7 +101,6 @@ export default function VvipMadhubanPage() {
   return (
     <main className="saya-page">
       <Navbar />
-      <FloatingSocial />
       {/* Hero Section */}
       <section className="saya-hero">
         <div className="saya-ambient saya-ambient-one" />

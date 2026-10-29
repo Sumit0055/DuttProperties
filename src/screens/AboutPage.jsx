@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "../Components/Header/Navbar";
 import bg from "../assets/images/1.jpg"
-import FloatingSocial from "../Components/FloatingSocial/FloatingSocial";
 import { whatsappLink } from "@/lib/site";
 
 const services = [
@@ -82,7 +81,6 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <FloatingSocial />
 
       <main className="real-about">
         {/* Decorative background */}

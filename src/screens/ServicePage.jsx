@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Navbar from "../Components/Header/Navbar";
-import FloatingSocial from "../Components/FloatingSocial/FloatingSocial";
 import bg from "../assets/images/bg.jpg";
 import { siteConfig, whatsappLink } from "@/lib/site";
 import { services, processSteps, serviceFaqs } from "@/data/services";
@@ -23,7 +22,6 @@ export default function ServicePage() {
   return (
     <>
       <Navbar />
-      <FloatingSocial />
 
       <main className="real-about">
         <div className="about-orb about-orb-one" />
