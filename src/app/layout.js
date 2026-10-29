@@ -65,10 +65,8 @@ export const metadata = {
       "max-video-preview": -1,
     },
   },
-  icons: {
-    icon: [{ url: "/logoHome1.png", type: "image/png" }],
-    apple: [{ url: "/logoHome1.png" }],
-  },
+  // Icons come from the App Router file conventions:
+  // src/app/icon.png and src/app/apple-icon.png (both the Dutt Properties logo).
   formatDetection: {
     telephone: true,
     address: true,

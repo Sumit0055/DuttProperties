@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 import Navbar from "../Components/Header/Navbar";
-import FloatingSocial from "../Components/FloatingSocial/FloatingSocial";
+import {
+  FaEnvelope,
+  FaFacebookF,
+  FaInstagram,
+  FaLocationDot,
+  FaPhone,
+  FaWhatsapp,
+  FaYoutube,
+} from "react-icons/fa6";
 import { siteConfig, whatsappLink } from "@/lib/site";
 
 const budgetOptions = [
@@ -39,8 +47,52 @@ const locationOptions = [
   { value: "other", label: "Other" },
 ];
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+const PHONE_DIGITS = /\d/g;
+
+const socials = [
+  { label: "Instagram", href: siteConfig.social.instagram, icon: FaInstagram },
+  { label: "Facebook", href: siteConfig.social.facebook, icon: FaFacebookF },
+  { label: "YouTube", href: siteConfig.social.youtube, icon: FaYoutube },
+];
+
+function validate(values) {
+  const errors = {};
+
+  if (!values.name) {
+    errors.name = "Please enter your name.";
+  } else if (values.name.length < 2) {
+    errors.name = "Name should be at least 2 characters.";
+  }
+
+  if (!values.email) {
+    errors.email = "Please enter your email address.";
+  } else if (!EMAIL_PATTERN.test(values.email)) {
+    errors.email = "Enter a valid email, for example name@gmail.com.";
+  }
+
+  const digits = (values.phone.match(PHONE_DIGITS) || []).length;
+
+  if (!values.phone) {
+    errors.phone = "Please enter your phone number.";
+  } else if (digits < 10 || digits > 13) {
+    errors.phone = "Enter a 10-digit mobile number.";
+  }
+
+  if (!values.budget) errors.budget = "Select your budget range.";
+  if (!values.property) errors.property = "Select a property type.";
+  if (!values.location) errors.location = "Select a location.";
+
+  if (values.location === "other" && !values.customLocation) {
+    errors.customLocation = "Enter the area you are looking in.";
+  }
+
+  return errors;
+}
+
 export default function Contact() {
   const [location, setLocation] = useState("");
+  const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
 
   const handleSubmit = (event) => {
@@ -49,226 +101,386 @@ export default function Contact() {
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    const name = String(data.get("name") || "").trim();
-    const email = String(data.get("email") || "").trim();
-    const phone = String(data.get("phone") || "").trim();
-    const budget = String(data.get("budget") || "");
-    const property = String(data.get("property") || "");
-    const selectedLocation = String(data.get("location") || "");
-    const customLocation = String(data.get("customLocation") || "").trim();
-    const message = String(data.get("message") || "").trim();
+    const values = {
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      phone: String(data.get("phone") || "").trim(),
+      budget: String(data.get("budget") || ""),
+      property: String(data.get("property") || ""),
+      location: String(data.get("location") || ""),
+      customLocation: String(data.get("customLocation") || "").trim(),
+      message: String(data.get("message") || "").trim(),
+    };
 
-    if (!name || !phone) {
+    const nextErrors = validate(values);
+    setErrors(nextErrors);
+
+    const firstError = Object.keys(nextErrors)[0];
+
+    if (firstError) {
       setStatus({
         state: "error",
-        text: "Please add your name and phone number so we can respond to your enquiry.",
+        text: "Please fill the highlighted fields before sending your enquiry.",
       });
+
+      const field = form.querySelector(`[name="${firstError}"]`);
+      field?.focus({ preventScroll: true });
+      field?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
 
     const place =
-      selectedLocation === "other" ? customLocation || "Not specified" : selectedLocation;
+      values.location === "other"
+        ? values.customLocation
+        : locationOptions.find((option) => option.value === values.location)?.label ||
+          values.location;
 
     const lines = [
       `New property enquiry — ${siteConfig.name}`,
       "",
-      `Name: ${name}`,
-      `Phone: ${phone}`,
-      email ? `Email: ${email}` : null,
-      `Budget: ${budget || "Not specified"}`,
-      `Property type: ${property || "Not specified"}`,
-      `Location: ${place || "Not specified"}`,
-      message ? `Message: ${message}` : null,
+      `Name: ${values.name}`,
+      `Phone: ${values.phone}`,
+      `Email: ${values.email}`,
+      `Budget: ${values.budget}`,
+      `Property type: ${values.property}`,
+      `Location: ${place}`,
+      values.message ? `Message: ${values.message}` : null,
     ].filter(Boolean);
 
     window.open(whatsappLink(lines.join("\n")), "_blank", "noopener,noreferrer");
 
     setStatus({
       state: "success",
-      text: `Thank you, ${name}. Your enquiry is ready in WhatsApp — press send there and our team will respond within one working day.`,
+      text: `Thank you, ${values.name}. Your enquiry is ready in WhatsApp — press send there and our team will respond within one working day.`,
     });
+
     form.reset();
     setLocation("");
+    setErrors({});
+  };
+
+  const handleReset = (event) => {
+    event.currentTarget.form?.reset();
+    setLocation("");
+    setErrors({});
+    setStatus(null);
+  };
+
+  const errorProps = (field) =>
+    errors[field]
+      ? { "aria-invalid": "true", "aria-describedby": `${field}-error` }
+      : {};
+
+  // As soon as a buyer corrects a field, its inline error clears.
+  const clearFieldError = (field) => {
+    setErrors((previous) => {
+      if (!previous[field]) return previous;
+      const next = { ...previous };
+      delete next[field];
+      return next;
+    });
   };
 
   return (
     <>
       <Navbar />
-      <FloatingSocial />
-      <article
-        id="contact"
-        className="container text-center"
-        style={{
-          marginBottom: "50px",
-          maxWidth: "700px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          padding: "30px 20px",
-        }}
-      >
-        <h2 className="major">Contact Us</h2>
-        <p className="major">
-          Authorized &amp; Trusted Channel Partner — delivering genuine deals, secure investments
-          and personalized guidance for your property journey across Ghaziabad, Noida, Greater Noida
-          and Delhi NCR.
-        </p>
 
-        <form method="post" action="#" onSubmit={handleSubmit} noValidate>
-          <div className="fields">
-            <div className="field half">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="form-control"
-                placeholder="Enter your name"
-                autoComplete="name"
-                required
-              />
-            </div>
+      <section className="dp-contact" id="contact">
+        <div className="dp-contact-head">
+          <h1>Contact Us</h1>
+          <p>
+            Authorized &amp; trusted channel partner for property in Ghaziabad, Noida, Greater Noida
+            and Delhi NCR. Share your requirement and the desk will respond with matching options,
+            current availability and site-visit slots.
+          </p>
+        </div>
 
-            <div className="field half">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="form-control"
-                placeholder="Enter your email"
-                autoComplete="email"
-                required
-              />
-            </div>
+        <div className="dp-contact-grid">
+          {/* ENQUIRY FORM */}
+          <div className="dp-contact-form-col">
+            <form method="post" action="#" onSubmit={handleSubmit} noValidate>
+              <div className="fields">
+                <div className="field half">
+                  <label htmlFor="name">
+                    Name <span aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="form-control"
+                    placeholder="Enter your name"
+                    autoComplete="name"
+                    required
+                    onChange={() => clearFieldError("name")}
+                    {...errorProps("name")}
+                  />
+                  {errors.name ? (
+                    <span className="field-error" id="name-error">
+                      {errors.name}
+                    </span>
+                  ) : null}
+                </div>
 
-            <div className="field half">
-              <label htmlFor="phone">Phone</label>
-              <input
-                type="tel"
-                name="phone"
-                id="phone"
-                className="form-control"
-                placeholder="Enter your phone number"
-                autoComplete="tel"
-                inputMode="tel"
-                required
-              />
-            </div>
+                <div className="field half">
+                  <label htmlFor="email">
+                    Email <span aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="form-control"
+                    placeholder="Enter your email"
+                    autoComplete="email"
+                    required
+                    onChange={() => clearFieldError("email")}
+                    {...errorProps("email")}
+                  />
+                  {errors.email ? (
+                    <span className="field-error" id="email-error">
+                      {errors.email}
+                    </span>
+                  ) : null}
+                </div>
 
-            <div className="field half">
-              <label htmlFor="budget">Budget</label>
-              <select name="budget" id="budget" className="form-control" required defaultValue="">
-                <option value="">Select your budget</option>
-                {budgetOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <div className="field half">
+                  <label htmlFor="phone">
+                    Phone <span aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    className="form-control"
+                    placeholder="Enter your phone number"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    required
+                    onChange={() => clearFieldError("phone")}
+                    {...errorProps("phone")}
+                  />
+                  {errors.phone ? (
+                    <span className="field-error" id="phone-error">
+                      {errors.phone}
+                    </span>
+                  ) : null}
+                </div>
 
-            <div className="field half">
-              <label htmlFor="property">Property Type</label>
-              <select name="property" id="property" className="form-control" required defaultValue="">
-                <option value="">Select property type</option>
-                {propertyOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <div className="field half">
+                  <label htmlFor="budget">
+                    Budget <span aria-hidden="true">*</span>
+                  </label>
+                  <select
+                    name="budget"
+                    id="budget"
+                    className="form-control"
+                    required
+                    defaultValue=""
+                    onChange={() => clearFieldError("budget")}
+                    {...errorProps("budget")}
+                  >
+                    <option value="">Select your budget</option>
+                    {budgetOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.budget ? (
+                    <span className="field-error" id="budget-error">
+                      {errors.budget}
+                    </span>
+                  ) : null}
+                </div>
 
-            <div className="field half">
-              <label htmlFor="location">Location</label>
-              <select
-                name="location"
-                id="location"
-                className="form-control"
-                required
-                value={location}
-                onChange={(event) => setLocation(event.target.value)}
-              >
-                <option value="">Select location</option>
-                {locationOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+                <div className="field half">
+                  <label htmlFor="property">
+                    Property Type <span aria-hidden="true">*</span>
+                  </label>
+                  <select
+                    name="property"
+                    id="property"
+                    className="form-control"
+                    required
+                    defaultValue=""
+                    onChange={() => clearFieldError("property")}
+                    {...errorProps("property")}
+                  >
+                    <option value="">Select property type</option>
+                    {propertyOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.property ? (
+                    <span className="field-error" id="property-error">
+                      {errors.property}
+                    </span>
+                  ) : null}
+                </div>
 
-              {location === "other" ? (
-                <input
-                  type="text"
-                  name="customLocation"
-                  id="customLocation"
-                  className="form-control"
-                  placeholder="Enter your location"
-                  style={{ marginTop: "10px" }}
-                />
+                <div className="field half">
+                  <label htmlFor="location">
+                    Location <span aria-hidden="true">*</span>
+                  </label>
+                  <select
+                    name="location"
+                    id="location"
+                    className="form-control"
+                    required
+                    value={location}
+                    onChange={(event) => {
+                      setLocation(event.target.value);
+                      clearFieldError("location");
+                      clearFieldError("customLocation");
+                    }}
+                    {...errorProps("location")}
+                  >
+                    <option value="">Select location</option>
+                    {locationOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.location ? (
+                    <span className="field-error" id="location-error">
+                      {errors.location}
+                    </span>
+                  ) : null}
+
+                  {location === "other" ? (
+                    <input
+                      type="text"
+                      name="customLocation"
+                      id="customLocation"
+                      className="form-control"
+                      placeholder="Enter your location"
+                      style={{ marginTop: "10px" }}
+                      required
+                      onChange={() => clearFieldError("customLocation")}
+                      {...errorProps("customLocation")}
+                    />
+                  ) : null}
+                  {errors.customLocation ? (
+                    <span className="field-error" id="customLocation-error">
+                      {errors.customLocation}
+                    </span>
+                  ) : null}
+                </div>
+
+                <div className="field">
+                  <label htmlFor="message">Message</label>
+                  <textarea
+                    name="message"
+                    id="message"
+                    rows="4"
+                    className="form-control"
+                    placeholder="Tell us about the property you are looking for"
+                  />
+                </div>
+              </div>
+
+              <div className="dp-contact-actions">
+                <button type="submit" className="dp-btn-gold">
+                  Send Message <span aria-hidden="true">↗</span>
+                </button>
+
+                <button type="button" className="dp-reset-link" onClick={handleReset}>
+                  Reset form
+                </button>
+              </div>
+
+              {status ? (
+                <p className="form-status" data-state={status.state} role="status" aria-live="polite">
+                  {status.text}
+                </p>
               ) : null}
-            </div>
-
-            <div className="field">
-              <label htmlFor="message">Message</label>
-              <textarea name="message" id="message" rows="4" className="form-control" />
-            </div>
+            </form>
           </div>
 
-          <ul className="actions d-flex justify-content-center gap-3 mt-4">
-            <li>
-              <input type="submit" value="Send Message" className="primary btn btn-primary" />
-            </li>
-            <li>
-              <input type="reset" value="Reset" className="btn btn-secondary" />
-            </li>
-          </ul>
+          {/* DIRECT CONTACT RAIL */}
+          <aside className="dp-contact-rail" aria-label="Direct contact details">
+            <a
+              className="dp-contact-row dp-contact-row-lead"
+              href={siteConfig.phoneHref}
+              aria-label={`Call ${siteConfig.phone}`}
+            >
+              <span className="dp-contact-icon">
+                <FaPhone aria-hidden="true" />
+              </span>
+              <span className="dp-contact-row-body">
+                <span className="dp-contact-label">Call</span>
+                <span className="dp-contact-value">{siteConfig.phone}</span>
+                <span className="dp-contact-note">Mon–Sat, 9:30 am – 7:30 pm</span>
+              </span>
+            </a>
 
-          {status ? (
-            <p className="form-status" data-state={status.state} role="status" aria-live="polite">
-              {status.text}
-            </p>
-          ) : null}
-        </form>
+            <a
+              className="dp-contact-row"
+              href={whatsappLink(
+                "Hi Dutt Properties, I would like to enquire about a property in Ghaziabad / Delhi NCR."
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Chat on WhatsApp at ${siteConfig.whatsappDisplay}`}
+            >
+              <span className="dp-contact-icon">
+                <FaWhatsapp aria-hidden="true" />
+              </span>
+              <span className="dp-contact-row-body">
+                <span className="dp-contact-label">WhatsApp</span>
+                <span className="dp-contact-value">{siteConfig.whatsappDisplay}</span>
+                {/* <span className="dp-contact-note">Send floor plans, price lists and photos</span> */}
+              </span>
+            </a>
 
-        <ul className="icons d-flex justify-content-center gap-4 mt-4 list-unstyled">
-          <li>
             <a
-              href={siteConfig.social.instagram}
-              className="icon fa-instagram"
-              target="_blank"
-              rel="noopener noreferrer"
+              className="dp-contact-row"
+              href={siteConfig.emailHref}
+              aria-label={`Email ${siteConfig.email}`}
             >
-              <span className="label">Instagram</span>
+              <span className="dp-contact-icon">
+                <FaEnvelope aria-hidden="true" />
+              </span>
+              <span className="dp-contact-row-body">
+                <span className="dp-contact-label">Email</span>
+                <span className="dp-contact-value dp-contact-value-email">{siteConfig.email}</span>
+              </span>
             </a>
-          </li>
-          <li>
-            <a
-              href={siteConfig.social.facebook}
-              className="icon fa-facebook"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="label">Facebook</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href={siteConfig.social.youtube}
-              className="icon fa-youtube"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="label">YouTube</span>
-            </a>
-          </li>
-          <li>
-            <a href={siteConfig.phoneHref} className="icon fa-phone">
-              <span className="label">Call {siteConfig.phone}</span>
-            </a>
-          </li>
-        </ul>
-      </article>
+
+            <div className="dp-contact-row dp-contact-row-static">
+              <span className="dp-contact-icon">
+                <FaLocationDot aria-hidden="true" />
+              </span>
+              <span className="dp-contact-row-body">
+                <span className="dp-contact-label">Office</span>
+                <span className="dp-contact-value dp-contact-value-address">
+                  {siteConfig.address.street}, {siteConfig.address.locality},{" "}
+                  {siteConfig.address.region} {siteConfig.address.postalCode}
+                </span>
+              </span>
+            </div>
+
+            <div className="dp-contact-socials">
+              {socials.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  title={label}
+                >
+                  <Icon aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </aside>
+        </div>
+      </section>
     </>
   );
 }

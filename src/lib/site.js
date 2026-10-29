@@ -5,6 +5,14 @@
  */
 
 const stripTrailingSlash = (value) => value.replace(/\/+$/, "");
+const digitsOnly = (value) => value.replace(/\D/g, "");
+
+/* Contact values are read from the environment and normalised once here, so a
+   number typed with spaces or dashes still produces a working tel: / wa.me link. */
+const rawPhone = process.env.NEXT_PUBLIC_PHONE || "+91 92896 19386";
+const phoneDigits = digitsOnly(rawPhone);
+const whatsappDigits = digitsOnly(process.env.NEXT_PUBLIC_WHATSAPP || phoneDigits);
+const contactEmail = process.env.NEXT_PUBLIC_EMAIL || "duttstate96@gmail.com";
 
 export const siteConfig = {
   name: process.env.NEXT_PUBLIC_SITE_NAME || "Dutt Properties",
@@ -18,10 +26,12 @@ export const siteConfig = {
     process.env.NEXT_PUBLIC_SITE_URL || "https://www.duttproperties.in"
   ),
 
-  phone: process.env.NEXT_PUBLIC_PHONE || "+91 96437 62686",
-  phoneHref: "tel:+919643762686",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || "919643762686",
-  email: process.env.NEXT_PUBLIC_EMAIL || "info@duttproperties.in",
+  phone: rawPhone,
+  phoneHref: `tel:+${phoneDigits}`,
+  whatsapp: whatsappDigits,
+  whatsappDisplay: process.env.NEXT_PUBLIC_WHATSAPP_DISPLAY || rawPhone,
+  email: contactEmail,
+  emailHref: `mailto:${contactEmail}`,
 
   address: {
     street: "Raj Nagar Extension",
