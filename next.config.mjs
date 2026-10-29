@@ -1,11 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-  experimental: {
-    agentFeedback: true,
+  reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "i.pravatar.cc" },
+    ],
   },
-  cacheComponents: true,
-  partialPrefetching: true,
+  experimental: {
+    optimizePackageImports: ["react-icons", "lucide-react"],
+  },
 };
 
 export default nextConfig;

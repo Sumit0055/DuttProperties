@@ -1,0 +1,499 @@
+
+/* =========================================
+   AR DOMAIN - PROFESSIONAL VIDEO SHOWCASE
+========================================= */
+
+.saya-video-section {
+  position: relative;
+  padding-top: 75px;
+  padding-bottom: 75px;
+  isolation: isolate;
+}
+
+.saya-video-heading {
+  max-width: 780px;
+  margin: 0 auto 35px;
+  text-align: center;
+}
+
+.saya-video-heading .saya-eyebrow,
+.saya-amenities-heading .saya-eyebrow {
+  justify-content: center;
+}
+
+.saya-video-heading h2,
+.saya-amenities-heading h2 {
+  margin: 18px 0;
+  font-size: clamp(30px, 4.5vw, 52px);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -1.3px;
+}
+
+.saya-video-heading h2 span,
+.saya-amenities-heading h2 span {
+  color: #d4af37;
+}
+
+.saya-video-heading p,
+.saya-amenities-heading p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: #dadada;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.saya-video-card {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 22px;
+  background: rgba(18, 18, 18, 0.76);
+  box-shadow:
+    0 0 25px rgba(212, 175, 55, 0.07),
+    0 18px 60px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.saya-video-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 12px 12px 18px;
+}
+
+.saya-video-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.saya-video-brand-icon {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 12px;
+  color: #d4af37;
+  background: rgba(212, 175, 55, 0.08);
+  font-size: 19px;
+}
+
+.saya-video-brand div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.saya-video-brand strong {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.saya-video-brand div:last-child span {
+  color: #aaa;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.saya-video-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 50px;
+  color: #e5c76c;
+  background: rgba(212, 175, 55, 0.07);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.saya-video-frame {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 15px;
+  background: #090909;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.saya-project-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #080808;
+  outline: none;
+}
+
+.saya-project-video:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: -3px;
+}
+
+.saya-video-caption {
+  position: absolute;
+  z-index: 1;
+  left: 22px;
+  bottom: 58px;
+  max-width: 75%;
+  pointer-events: none;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+
+.saya-video-caption > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #f0d77d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.saya-video-caption h3 {
+  margin: 10px 0 0;
+  color: #fff;
+  font-size: clamp(18px, 3vw, 32px);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.saya-video-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 20px 12px 7px;
+}
+
+.saya-video-footer-copy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.saya-video-footer-copy p {
+  margin: 0;
+  color: #c7c7c7;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.saya-video-footer-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.55);
+}
+
+.saya-video-enquire {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 17px;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  border-radius: 8px;
+  color: #f0d77d;
+  background: rgba(212, 175, 55, 0.08);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.saya-video-enquire:hover {
+  color: #111;
+  background: #d4af37;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+}
+
+.saya-video-enquire:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 4px;
+}
+
+/* =========================================
+   LIFESTYLE AMENITIES
+========================================= */
+
+.saya-amenities-section {
+  position: relative;
+  padding-top: 65px;
+  padding-bottom: 75px;
+}
+
+.saya-amenities-heading {
+  max-width: 780px;
+  margin: 0 auto 35px;
+  text-align: center;
+}
+
+.saya-amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.saya-amenity-card {
+  position: relative;
+  min-width: 0;
+  padding: 25px 22px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 16px;
+  background: rgba(20, 20, 20, 0.65);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.saya-amenity-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.07);
+}
+
+.saya-amenity-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 22px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
+  color: #d4af37;
+  background: rgba(212, 175, 55, 0.08);
+  font-size: 19px;
+}
+
+.saya-amenity-number {
+  position: absolute;
+  top: 25px;
+  right: 22px;
+  color: rgba(212, 175, 55, 0.65);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.saya-amenity-card h3 {
+  margin: 0 0 9px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.saya-amenity-card p {
+  margin: 0;
+  color: #bdbdbd;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .saya-video-section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .saya-video-heading,
+  .saya-amenities-heading {
+    margin-bottom: 25px;
+  }
+
+  .saya-video-heading h2,
+  .saya-amenities-heading h2 {
+    letter-spacing: -0.5px;
+  }
+
+  .saya-video-heading p,
+  .saya-amenities-heading p {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .saya-video-card {
+    padding: 9px;
+    border-radius: 16px;
+  }
+
+  .saya-video-topbar {
+    padding: 9px 5px 14px;
+  }
+
+  .saya-video-brand-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .saya-video-badge {
+    padding: 7px 9px;
+    font-size: 9px;
+  }
+
+  .saya-video-frame {
+    border-radius: 10px;
+  }
+
+  .saya-video-caption {
+    left: 12px;
+    bottom: 47px;
+    max-width: 85%;
+  }
+
+  .saya-video-caption > span {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+
+  .saya-video-footer {
+    padding: 16px 5px 5px;
+  }
+
+  .saya-video-footer-copy p {
+    font-size: 12px;
+  }
+
+  .saya-amenities-section {
+    padding-top: 45px;
+    padding-bottom: 50px;
+  }
+
+  .saya-amenities-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+
+  .saya-amenity-card {
+    padding: 20px 16px;
+  }
+
+  .saya-amenity-number {
+    top: 20px;
+    right: 16px;
+  }
+
+  .saya-amenity-card h3 {
+    font-size: 15px;
+  }
+
+  .saya-amenity-card p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .saya-video-section {
+    padding-top: 35px;
+    padding-bottom: 35px;
+  }
+
+  .saya-video-card {
+    padding: 7px;
+  }
+
+  .saya-video-topbar {
+    gap: 9px;
+  }
+
+  .saya-video-brand {
+    gap: 8px;
+  }
+
+  .saya-video-brand strong {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .saya-video-brand div:last-child span {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .saya-video-brand-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+  }
+
+  .saya-video-badge {
+    gap: 5px;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .saya-video-caption {
+    left: 10px;
+    bottom: 39px;
+    max-width: 90%;
+  }
+
+  .saya-video-caption h3 {
+    margin-top: 5px;
+    font-size: 15px;
+  }
+
+  .saya-video-caption > span {
+    font-size: 7px;
+  }
+
+  .saya-video-footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .saya-video-enquire {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .saya-amenities-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .saya-amenity-card {
+    padding: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saya-video-enquire,
+  .saya-amenity-card {
+    transition: none;
+  }
+}
